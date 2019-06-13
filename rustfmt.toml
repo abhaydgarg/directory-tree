@@ -1,0 +1,6 @@
+reorder_imports = false
+merge_imports = false
+reorder_modules = false
+tab_spaces = 2
+trailing_comma = "Never"
+newline_style = "Unix"

@@ -1,0 +1,21 @@
+[package]
+name = "directory-tree"
+version = "0.0.1"
+authors = ["Abhay Garg"]
+edition = "2018"
+license = "MIT"
+description = "Creates a JavaScript object representing a directory tree"
+readme = "README.md"
+homepage = "https://github.com/abhaydgarg/directory-tree"
+repository = "https://github.com/abhaydgarg/directory-tree"
+keywords = ["cli", "directory", "tree", "json"]
+categories = ["command-line-utilities"]
+
+[dependencies]
+serde = { version = "1.0.92", features = ["derive"] }
+serde_json = "1.0.39"
+spinners = "1.0.0"
+colored = "1.8"
+byte-unit = "2.1.0"
+humantime = "1.2.0"
+clap = "2.33.0"
