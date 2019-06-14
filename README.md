@@ -7,12 +7,11 @@ Creates a JSON representing a directory tree.
 
 ## Installation
 
-> **Prerequisite:** System must have **Rust** installed.
+> **Prerequisite:** Install **Rust**.
 
-1. Download the source code.
-2. Open terminal at application directory.
-3. Build with the release profile by running `$ cargo build --release`.
-4. Set path variable which points to `target/release`.
+```bash
+cargo install --git https://github.com/abhaydgarg/directory-tree.git
+```
 
 ## Usage
 
