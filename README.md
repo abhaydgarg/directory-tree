@@ -9,7 +9,7 @@ Creates a JSON representing a directory tree.
 
 - OS X
 - Unix
-- ~~Windows~~
+- ~~Windows~~ _It has not been implemented by keeping windows's file system in mind._
 
 ## Installation
 

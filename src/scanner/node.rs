@@ -4,6 +4,7 @@ use serde::Serialize;
 pub struct Node {
   kind: super::Kind,
   name: String,
+  abspath: String,
   path: String,
   size: u64,
   created: u64,
@@ -15,6 +16,7 @@ impl Node {
   pub fn new(
     kind: super::Kind,
     name: String,
+    abspath: String,
     path: String,
     size: u64,
     created: u64,
@@ -24,6 +26,7 @@ impl Node {
     Node {
       kind: kind,
       name: name,
+      abspath: abspath,
       path: path,
       size: size,
       created: created,
@@ -34,6 +37,10 @@ impl Node {
 
   pub fn get_size(&self) -> u64 {
     self.size
+  }
+
+  pub fn get_path(&self) -> &String {
+    &self.path
   }
 
   pub fn increment_dir_size(&mut self, size: u64) {

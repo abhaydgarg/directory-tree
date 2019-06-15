@@ -45,11 +45,13 @@ pub fn run(path: &str) -> Result<ScanResult, String> {
   }
 
   let metadata = path.metadata().unwrap();
+  let name = util::name(path.file_name().unwrap_or(OsStr::new("/")).to_os_string());
 
   let mut root = Node::new(
     Kind::Directory,
-    util::name(path.file_name().unwrap_or(OsStr::new("/")).to_os_string()),
-    util::path(path.to_path_buf()),
+    name.clone(),
+    util::abspath(path.to_path_buf()),
+    name,
     0, // 0 because calculated recursively later.
     util::created(&metadata),
     util::modified(&metadata),
@@ -85,7 +87,8 @@ fn scan(iter: ReadDir, node: &mut Node) {
             node.add_child(Node::new(
               Kind::Directory,
               util::name(entry.file_name()),
-              util::path(entry.path()),
+              util::abspath(entry.path()),
+              util::path(entry.file_name(), node.get_path()),
               0, // 0 because calculated recursively later.
               util::created(&metadata),
               util::modified(&metadata),
@@ -101,7 +104,8 @@ fn scan(iter: ReadDir, node: &mut Node) {
           node.add_child(Node::new(
             Kind::File,
             util::name(entry.file_name()),
-            util::path(entry.path()),
+            util::abspath(entry.path()),
+            util::path(entry.file_name(), node.get_path()),
             metadata.len(),
             util::created(&metadata),
             util::modified(&metadata),
