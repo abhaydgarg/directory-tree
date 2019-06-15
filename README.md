@@ -5,6 +5,12 @@ Creates a JSON representing a directory tree.
 - Ignore symbolic link.
 - Ignore file and directory to which permission is denied.
 
+## Tested on
+
+- OS X
+- Unix
+- ~~Windows~~
+
 ## Installation
 
 > **Prerequisite:** Install **Rust**.
