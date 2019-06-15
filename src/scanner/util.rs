@@ -8,15 +8,8 @@ pub fn name(name: OsString) -> String {
   name.to_str().unwrap().to_string()
 }
 
-pub fn abspath(path: PathBuf) -> String {
+pub fn path(path: PathBuf) -> String {
   path.to_str().unwrap().to_string()
-}
-
-pub fn path(name: OsString, parent_path: &String) -> String {
-  let mut path = name.into_string().unwrap();
-  path.insert_str(0, "/");
-  path.insert_str(0, parent_path);
-  path
 }
 
 pub fn created(metadata: &Metadata) -> u64 {
