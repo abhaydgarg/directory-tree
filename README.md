@@ -66,7 +66,8 @@ photos
 {
   "kind": "Directory",
   "name": "photos",
-  "path": "/photos",
+  "abspath": "/user/photos",
+  "path": "photos",
   "size": 152407986,
   "created": 83642258,
   "modified": 64940080,
@@ -74,7 +75,8 @@ photos
     {
       "kind": "Directory",
       "name": "summer",
-      "path": "/photos/summer",
+      "abspath": "/user/photos/summer",
+      "path": "photos/summer",
       "size": 400,
       "created": 83642258,
       "modified": 64940080,
@@ -82,7 +84,8 @@ photos
         {
           "kind": "Directory",
           "name": "june",
-          "path": "/photos/summer/june",
+          "abspath": "/user/photos/june",
+          "path": "photos/summer/june",
           "size": 400,
           "created": 83642258,
           "modified": 64940080,
@@ -90,7 +93,8 @@ photos
             {
               "kind": "File",
               "name": "windsurf.jpg",
-              "path": "/photos/summer/june/windsurf.jpg",
+              "abspath": "/user/photos/june/windsurf.jpg",
+              "path": "photos/summer/june/windsurf.jpg",
               "size": 400,
               "created": 83642258,
               "modified": 64940080
@@ -102,7 +106,8 @@ photos
     {
       "kind": "Directory",
       "name": "winter",
-      "path": "/photos/winter",
+      "abspath": "/user/photos/winter",
+      "path": "photos/winter",
       "size": 200,
       "created": 83642258,
       "modified": 64940080,
@@ -110,7 +115,8 @@ photos
         {
           "kind": "Directory",
           "name": "january",
-          "path": "/photos/winter/january",
+          "abspath": "/user/photos/winter/january",
+          "path": "photos/winter/january",
           "size": 200,
           "created": 83642258,
           "modified": 64940080,
@@ -118,7 +124,8 @@ photos
             {
               "kind": "File",
               "name": "ski.png",
-              "path": "/photos/winter/january/ski.png",
+              "abspath": "/user/photos/winter/january/ski.png",
+              "path": "photos/winter/january/ski.png",
               "size": 100,
               "created": 83642258,
               "modified": 64940080,
@@ -126,7 +133,8 @@ photos
             {
               "kind": "File",
               "name": "snowboard.jpg",
-              "path": "/photos/winter/january/snowboard.jpg",
+              "abspath": "/user/photos/winter/january/snowboard.png",
+              "path": "photos/winter/january/snowboard.jpg",
               "size": 100,
               "created": 83642258,
               "modified": 64940080,
