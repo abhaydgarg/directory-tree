@@ -20,7 +20,7 @@ fn main() {
   let matches = App::new("Directory tree")
     .version(crate_version!())
     .author(crate_authors!())
-    .about("Creates a JavaScript object representing a directory tree.")
+    .about("Creates a JSON representing a directory tree.")
     .arg(
       Arg::with_name("scan")
         .short("s")
