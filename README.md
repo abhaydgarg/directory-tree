@@ -142,3 +142,4 @@ photos
 ## To Do
 
 - Add parent object in JSON to make tree backtracking easy.
+- Add `value` property equivalent to `size` but with different name.
