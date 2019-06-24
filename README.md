@@ -141,7 +141,7 @@ photos
 
 ## To Do
 
-- Add parent object in JSON to make tree backtracking easy.
+- Add `id` properties.
+- Add parent as id in JSON. Adding parent object reference creates circular reference propblem. Root's parent `id` is `null`.
 - Add `value` property equivalent to `size` but with different name.
 - Add `path` and `abspath` properties.
-- Add `id` properties.
