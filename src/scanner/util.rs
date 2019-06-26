@@ -1,15 +1,29 @@
 use std::{
   fs::Metadata,
   ffi::OsString,
-  path::PathBuf
+  path::{
+    Path,
+    PathBuf
+  }
 };
 
 pub fn name(name: OsString) -> String {
   name.to_str().unwrap().to_string()
 }
 
-pub fn path(path: PathBuf) -> String {
+pub fn abspath(path: PathBuf) -> String {
   path.to_str().unwrap().to_string()
+}
+
+pub fn path(path: &Path, parent_path: &str) -> String {
+  // It calls only when we have `parent_path` in our hand
+  // so safe to unwrap.
+  path
+    .strip_prefix(parent_path)
+    .unwrap()
+    .to_str()
+    .unwrap()
+    .to_string()
 }
 
 pub fn created(metadata: &Metadata) -> u64 {

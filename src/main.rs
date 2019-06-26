@@ -94,4 +94,5 @@ fn main() {
   println!("{} {}", "Total time".bright_blue().bold(), time);
   println!("{} {}", "Scan time".bright_blue().bold(), result.time);
   println!("{} {}", "Size".bright_blue().bold(), byte.to_string());
+  println!("{} {}", "Total items".bright_blue().bold(), result.items);
 }

@@ -18,6 +18,7 @@ use node::Node;
 pub struct ScanResult {
   pub time: String,
   pub size: u64,
+  pub items: u32,
   pub json: String,
 }
 
@@ -45,19 +46,33 @@ pub fn run(path: &str) -> Result<ScanResult, String> {
   }
 
   let metadata = path.metadata().unwrap();
-
+  let mut id = 0u32;
+  // If `/` is provided to scan then set
+  // name, relative path and parent path to `/`.
+  let name = path.file_name().unwrap_or(OsStr::new("/"));
+  let mut relative_path = String::from("/");
+  let mut parent_path = "/";
+  // If path to scan is not `/` then:
+  if let Some(parent) = path.parent() {
+    parent_path = parent.to_str().unwrap();
+    relative_path = util::path(&path, parent_path);
+  }
   let mut root = Node::new(
     Kind::Directory,
-    util::name(path.file_name().unwrap_or(OsStr::new("/")).to_os_string()),
-    util::path(path.to_path_buf()),
+    id,
+    util::name(name.to_os_string()),
+    util::abspath(path.to_path_buf()),
+    relative_path,
     0, // 0 because calculated recursively.
+    0,
     util::created(&metadata),
     util::modified(&metadata),
+    None,
     None,
   );
 
   let now = timer::start();
-  scan(iter, &mut root);
+  scan(iter, &mut root, &mut id, parent_path);
   let time = timer::end(now);
 
   let size = root.get_size();
@@ -66,11 +81,12 @@ pub fn run(path: &str) -> Result<ScanResult, String> {
   Ok(ScanResult {
     time: time,
     size: size,
+    items: id,
     json: json,
   })
 }
 
-fn scan(iter: ReadDir, node: &mut Node) {
+fn scan(iter: ReadDir, node: &mut Node, id: &mut u32, parent_path: &str) {
   for entry in iter {
     let entry = entry.unwrap();
     // Avoid symbolic link.
@@ -78,33 +94,45 @@ fn scan(iter: ReadDir, node: &mut Node) {
       // Proceed only when successfully
       // read metadata.
       if let Ok(metadata) = entry.metadata() {
+        *id = *id + 1;
+        let parent = node.get_id();
         if metadata.is_dir() == true {
           // Proceed only when successfully
           // access dir content.
           if let Ok(iter) = fs::read_dir(entry.path()) {
             node.add_child(Node::new(
               Kind::Directory,
+              *id,
               util::name(entry.file_name()),
-              util::path(entry.path()),
+              util::abspath(entry.path()),
+              util::path(&entry.path(), parent_path),
+              0,
               0,
               util::created(&metadata),
               util::modified(&metadata),
+              Some(parent),
               None,
             ));
             let last_child = node.get_last_child();
-            scan(iter, last_child);
+            scan(iter, last_child, id, parent_path);
             let size = last_child.get_size();
             node.increment_dir_size(size);
+            node.set_value();
           }
         } else {
           node.increment_dir_size(metadata.len());
+          node.set_value();
           node.add_child(Node::new(
             Kind::File,
+            *id,
             util::name(entry.file_name()),
-            util::path(entry.path()),
+            util::abspath(entry.path()),
+            util::path(&entry.path(), parent_path),
+            metadata.len(),
             metadata.len(),
             util::created(&metadata),
             util::modified(&metadata),
+            Some(parent),
             None,
           ));
         }

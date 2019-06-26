@@ -52,12 +52,7 @@ Given a directory structured like this:
 ```
 photos
 ├── summer
-│   └── june
-│       └── windsurf.jpg
-└── winter
-    └── january
-        ├── ski.png
-        └── snowboard.jpg
+│   └── windsurf.jpg
 ```
 
 `directory-tree` will write JSON to file:
@@ -65,73 +60,40 @@ photos
 ```js
 {
   "kind": "Directory",
+  "id": 0,
   "name": "photos",
+  "abspath": "/user/photos",
   "path": "photos",
   "size": 152407986,
+  "value": 152407986,
   "created": 83642258,
   "modified": 64940080,
+  "parent": null,
   "children": [
     {
       "kind": "Directory",
+      "id": 1,
       "name": "summer",
-      "path": "/photos/summer",
+      "abspath": "/user/photos/summer",
+      "path": "photos/summer",
       "size": 400,
+      "value": 400,
       "created": 83642258,
       "modified": 64940080,
+      "parent": 0,
       "children": [
         {
-          "kind": "Directory",
-          "name": "june",
-          "path": "/photos/summer/june",
+          "kind": "File",
+          "id": 2,
+          "name": "windsurf.jpg",
+          "abspath": "/user/photos/summer/windsurf.jpg",
+          "path": "photos/summer/windsurf.jpg",
           "size": 400,
+          "value": 400,
           "created": 83642258,
           "modified": 64940080,
-          "children": [
-            {
-              "kind": "File",
-              "name": "windsurf.jpg",
-              "path": "/photos/summer/june/windsurf.jpg",
-              "size": 400,
-              "created": 83642258,
-              "modified": 64940080
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "kind": "Directory",
-      "name": "winter",
-      "path": "/photos/winter",
-      "size": 200,
-      "created": 83642258,
-      "modified": 64940080,
-      "children": [
-        {
-          "kind": "Directory",
-          "name": "january",
-          "path": "/photos/winter/january",
-          "size": 200,
-          "created": 83642258,
-          "modified": 64940080,
-          "children": [
-            {
-              "kind": "File",
-              "name": "ski.png",
-              "path": "/photos/winter/january/ski.png",
-              "size": 100,
-              "created": 83642258,
-              "modified": 64940080,
-            },
-            {
-              "kind": "File",
-              "name": "snowboard.jpg",
-              "path": "/photos/winter/january/snowboard.jpg",
-              "size": 100,
-              "created": 83642258,
-              "modified": 64940080,
-            }
-          ]
+          "parent": 1,
+          "children": null
         }
       ]
     }
@@ -139,9 +101,6 @@ photos
 }
 ```
 
-## To Do
+## Todo
 
-- Add `id` properties.
-- Add parent as id in JSON. Adding parent object reference creates circular reference propblem. Root's parent `id` is `null`.
-- Add `value` property equivalent to `size` but with different name.
-- Add `path` and `abspath` properties.
+- CLI Option to exclude certain properties in final JSON to reduce file size. Exclude should be implemented while serializing using custom `serde` serializer.
