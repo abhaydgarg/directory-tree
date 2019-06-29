@@ -50,19 +50,18 @@ pub fn run(path: &str) -> Result<ScanResult, String> {
   // If `/` is provided to scan then set
   // name, relative path and parent path to `/`.
   let name = path.file_name().unwrap_or(OsStr::new("/"));
-  let mut relative_path = String::from("/");
-  let mut parent_path = "/";
+  // None for root - no parent.
+  let mut parent_path = None;
   // If path to scan is not `/` then:
   if let Some(parent) = path.parent() {
-    parent_path = parent.to_str().unwrap();
-    relative_path = util::path(&path, parent_path);
+    parent_path = Some(parent.to_str().unwrap());
   }
   let mut root = Node::new(
     Kind::Directory,
     id,
     util::name(name.to_os_string()),
     util::abspath(path.to_path_buf()),
-    relative_path,
+    util::path(&path, parent_path),
     0, // 0 because calculated recursively.
     0,
     util::created(&metadata),
@@ -86,7 +85,7 @@ pub fn run(path: &str) -> Result<ScanResult, String> {
   })
 }
 
-fn scan(iter: ReadDir, node: &mut Node, id: &mut u32, parent_path: &str) {
+fn scan(iter: ReadDir, node: &mut Node, id: &mut u32, parent_path: Option<&str>) {
   for entry in iter {
     let entry = entry.unwrap();
     // Avoid symbolic link.

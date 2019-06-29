@@ -15,15 +15,16 @@ pub fn abspath(path: PathBuf) -> String {
   path.to_str().unwrap().to_string()
 }
 
-pub fn path(path: &Path, parent_path: &str) -> String {
-  // It calls only when we have `parent_path` in our hand
-  // so safe to unwrap.
-  path
-    .strip_prefix(parent_path)
-    .unwrap()
-    .to_str()
-    .unwrap()
-    .to_string()
+pub fn path(path: &Path, parent_path: Option<&str>) -> String {
+  if let Some(parent) = parent_path {
+    return path
+      .strip_prefix(parent)
+      .unwrap()
+      .to_str()
+      .unwrap()
+      .to_string();
+  }
+  path.to_str().unwrap().to_string()
 }
 
 pub fn created(metadata: &Metadata) -> u64 {
