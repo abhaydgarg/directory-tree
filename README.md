@@ -103,4 +103,4 @@ photos
 
 ## Todo
 
-- CLI Option to exclude certain properties in final JSON to reduce file size. Exclude should be implemented while serializing using custom `serde` serializer.
+- CLI option to exclude properties in the final JSON to reduce file size. Exclusion should be implemented while serializing using custom `serde` serializer.
