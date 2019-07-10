@@ -1,10 +1,7 @@
 use std::{
   fs::Metadata,
   ffi::OsString,
-  path::{
-    Path,
-    PathBuf
-  }
+  path::{Path, PathBuf},
 };
 
 pub fn name(name: OsString) -> String {

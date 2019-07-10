@@ -1,14 +1,5 @@
-use std::{
-  fs,
-  process,
-  path::Path
-};
-use clap::{
-  Arg,
-  App,
-  crate_version,
-  crate_authors
-};
+use std::{fs, process, path::Path};
+use clap::{Arg, App, crate_version, crate_authors};
 use spinners::{Spinner, Spinners};
 use byte_unit::Byte;
 use colored::*;
@@ -28,7 +19,7 @@ fn main() {
         .number_of_values(2)
         .value_names(&["DIR", "FILE"])
         .required(true)
-        .help("Provide directory to scan and file to write JSON")
+        .help("Provide directory to scan and file's path to write JSON")
         .takes_value(true),
     )
     .get_matches();

@@ -1,7 +1,7 @@
 use std::{
   ffi::OsStr,
   path::Path,
-  fs:: {self, ReadDir}
+  fs::{self, ReadDir},
 };
 use serde::Serialize;
 use serde_json;
@@ -9,9 +9,9 @@ use serde_json;
 mod node;
 mod util;
 
-// Paths in `use` statements are relative to the crate root.
-// To import items relative to the current and parent modules,
-// use the `self::` and `super::` prefixes, respectively.
+// use `super::` to import
+// module which is declared in
+// parent `main`.
 use super::timer;
 use node::Node;
 
@@ -28,8 +28,15 @@ pub enum Kind {
   File,
 }
 
-pub fn run(path: &str) -> Result<ScanResult, String> {
-  let path = Path::new(path);
+pub fn run(raw_path: &str) -> Result<ScanResult, String> {
+  let raw_path = Path::new(raw_path);
+  // Normalize the path.
+  let normalize_path = match raw_path.canonicalize() {
+    Ok(path) => path,
+    Err(err) => return Err(err.to_string()),
+  };
+
+  let path = Path::new(&normalize_path);
 
   // `read_dir` check:
   // 1. The provided path doesn't exist.
@@ -47,12 +54,12 @@ pub fn run(path: &str) -> Result<ScanResult, String> {
 
   let metadata = path.metadata().unwrap();
   let mut id = 0u32;
-  // If `/` is provided to scan then set
-  // name, relative path and parent path to `/`.
-  let name = path.file_name().unwrap_or(OsStr::new("/"));
-  // None for root - no parent.
+  let name = path
+    .file_name()
+    .unwrap_or_else(|| -> &OsStr { path.as_os_str() });
   let mut parent_path = None;
-  // If path to scan is not `/` then:
+  // If path to scan is not a root `/`
+  // then there must be a parent.
   if let Some(parent) = path.parent() {
     parent_path = Some(parent.to_str().unwrap());
   }
@@ -80,7 +87,7 @@ pub fn run(path: &str) -> Result<ScanResult, String> {
   Ok(ScanResult {
     time: time,
     size: size,
-    items: id,
+    items: id + 1,
     json: json,
   })
 }
